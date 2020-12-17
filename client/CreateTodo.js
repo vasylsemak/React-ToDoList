@@ -1,4 +1,5 @@
-import React, {Component} from 'react'
+import React, { Component } from 'react';
+import axios from 'axios';
 
 export default class CreateTodo extends Component {
   constructor() {
@@ -12,22 +13,24 @@ export default class CreateTodo extends Component {
   }
 
   handleChange(event) {
+    event.preventDefault();
     const name = event.target.name;
     const value = event.target.value;
     this.setState({ [name]: value });
   }
 
-  handleSubmit(event) {
+  async handleSubmit(event) {
     event.preventDefault();
     const taskName = event.target.taskName.value;
     const assignee = event.target.assignee.value;
     this.setState({ taskName, assignee });
+
     console.log('State ->', this.state);
+    await axios.post('/api/todos', { taskName, assignee })
   }
 
   render () {
     const { taskName, assignee } = this.state;
-    console.log('taskName ->', taskName, 'assignee ->', assignee);
 
     return (
       <form onSubmit={this.handleSubmit}>

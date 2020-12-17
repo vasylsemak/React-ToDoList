@@ -11,10 +11,15 @@ export default class Todos extends Component {
     }
   }
 
-  async componentDidMount () {
-    const res = await axios.get('/api/todos')
-    this.setState({todos: res.data})
+  async componentDidMount() {
+    const { data } = await axios.get('/api/todos');
+    this.setState({ todos: res.data });
   }
+
+  // async componentDidUpdate() {
+  //   const { data } = await axios.get('/api/todos');
+  //   this.setState({ todos: data })
+  // }
 
   render () {
     return (
