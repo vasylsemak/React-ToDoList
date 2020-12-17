@@ -9,22 +9,28 @@ export default class Todos extends Component {
     this.state = {
       todos: []
     }
+    this.addTodo = this.addTodo.bind(this);
   }
 
   async componentDidMount() {
     const { data } = await axios.get('/api/todos');
-    this.setState({ todos: res.data });
+    this.setState({ todos: data });
   }
 
-  // async componentDidUpdate() {
-  //   const { data } = await axios.get('/api/todos');
-  //   this.setState({ todos: data })
-  // }
+  addTodo(todo) {
+    const todos = this.state.todos;
+    const todosUpdated = [...todos, todo];
+    this.setState({ todos: todosUpdated });
+  }
 
   render () {
+    const { todos } = this.state;
+    const todoId = todos.length +1;
+    console.log('Render TODOS->', todos);
+
     return (
       <div id='todos'>
-        <CreateTodo />
+        <CreateTodo addTodo={this.addTodo} todoId={todoId} />
         {
           this.state.todos.map(todo => <Todo todo={todo} key={todo.id} />)
         }

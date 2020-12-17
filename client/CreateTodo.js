@@ -2,9 +2,10 @@ import React, { Component } from 'react';
 import axios from 'axios';
 
 export default class CreateTodo extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
+      id: 0,
       taskName: '',
       assignee: ''
     }
@@ -24,9 +25,15 @@ export default class CreateTodo extends Component {
     const taskName = event.target.taskName.value;
     const assignee = event.target.assignee.value;
     this.setState({ taskName, assignee });
-
     console.log('State ->', this.state);
-    await axios.post('/api/todos', { taskName, assignee })
+
+    await axios.post('/api/todos', { taskName, assignee });
+    const { addTodo, todoId } = this.props;
+    addTodo({
+      id: todoId,
+      taskName: taskName,
+      assignee: assignee,
+    });
   }
 
   render () {
