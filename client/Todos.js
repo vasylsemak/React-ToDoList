@@ -33,11 +33,10 @@ export default class Todos extends Component {
 
   render () {
     const { todos } = this.state;
-    const todoId = todos.length +1;
 
     return (
       <div id='todos'>
-        <CreateTodo addTodo={this.addTodo} todoId={todoId} />
+        <CreateTodo addTodo={this.addTodo} />
         {
           this.state.todos.map(todo =>
             <Todo key={todo.id} todo={todo} removeTodo={this.removeTodo} />

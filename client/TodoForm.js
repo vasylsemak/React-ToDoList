@@ -9,14 +9,14 @@ export default (props) => {
       <input
         type='text'
         name='taskName'
-        value={stateT.taskName}
+        value={taskName}
         onChange={handleChange}
       />
       <label htmlFor='assignee'>Assign To:</label>
       <input
         type='text'
         name='assignee'
-        value={stateT.assignee}
+        value={assignee}
         onChange={handleChange}
       />
       <button type='submit'>Submit</button>

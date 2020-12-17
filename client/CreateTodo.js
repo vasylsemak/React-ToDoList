@@ -3,8 +3,8 @@ import axios from 'axios';
 import TodoForm from './TodoForm';
 
 export default class CreateTodo extends Component {
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
     this.state = {
       id: 0,
       taskName: '',
@@ -27,17 +27,13 @@ export default class CreateTodo extends Component {
     const taskName = event.target.taskName.value;
     const assignee = event.target.assignee.value;
     this.setState({ taskName, assignee });
-    console.log('State ->', this.state);
-
     this.clearInput();
 
-    await axios.post('/api/todos', { taskName, assignee });
-    const { addTodo, todoId } = this.props;
-    addTodo({
-      id: todoId,
-      taskName: taskName,
-      assignee: assignee,
-    });
+    const { data } = await axios.post('/api/todos', { taskName, assignee });
+    console.log('handleSubmit ->', data)
+
+    const { addTodo } = this.props;
+    addTodo(data);
   }
 
   clearInput() {
