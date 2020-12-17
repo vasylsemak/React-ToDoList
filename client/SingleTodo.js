@@ -19,7 +19,7 @@ export default class SingleTodo extends Component {
   }
 
   render () {
-    const todo = this.state.todo
+    const { todo } = this.state;
     console.log('single todo ->', todo)
 
     return (

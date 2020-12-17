@@ -25,14 +25,10 @@ export default class Todos extends Component {
   }
 
   async removeTodo(todoId) {
-    console.log('before', this.state.todos);
-
     await axios.delete(`/api/todos/${todoId}`);
     const todos = this.state.todos;
     const todosUpdated = todos.filter( t => t.id !== todoId);
     this.setState({ todos: todosUpdated });
-
-    console.log('after', this.state.todos);
   }
 
   render () {
