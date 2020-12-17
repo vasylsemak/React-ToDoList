@@ -10,6 +10,7 @@ export default class Todos extends Component {
       todos: []
     }
     this.addTodo = this.addTodo.bind(this);
+    this.removeTodo = this.removeTodo.bind(this);
   }
 
   async componentDidMount() {
@@ -23,16 +24,28 @@ export default class Todos extends Component {
     this.setState({ todos: todosUpdated });
   }
 
+  async removeTodo(todoId) {
+    console.log('before', this.state.todos);
+
+    await axios.delete(`/api/todos/${todoId}`);
+    const todos = this.state.todos;
+    const todosUpdated = todos.filter( t => t.id !== todoId);
+    this.setState({ todos: todosUpdated });
+
+    console.log('after', this.state.todos);
+  }
+
   render () {
     const { todos } = this.state;
     const todoId = todos.length +1;
-    console.log('Render TODOS->', todos);
 
     return (
       <div id='todos'>
         <CreateTodo addTodo={this.addTodo} todoId={todoId} />
         {
-          this.state.todos.map(todo => <Todo todo={todo} key={todo.id} />)
+          this.state.todos.map(todo =>
+            <Todo key={todo.id} todo={todo} removeTodo={this.removeTodo} />
+          )
         }
       </div>
     )
