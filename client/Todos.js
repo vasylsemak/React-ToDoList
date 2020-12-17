@@ -17,8 +17,6 @@ export default class Todos extends Component {
   }
 
   render () {
-    console.log('todos ->', this.state.todos)
-
     return (
       <div id='todos'>
         <CreateTodo />
