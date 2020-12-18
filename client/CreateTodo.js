@@ -30,8 +30,6 @@ export default class CreateTodo extends Component {
     this.clearInput();
 
     const { data } = await axios.post('/api/todos', { taskName, assignee });
-    console.log('handleSubmit ->', data)
-
     const { addTodo } = this.props;
     addTodo(data);
   }

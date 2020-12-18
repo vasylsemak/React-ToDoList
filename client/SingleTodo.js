@@ -1,8 +1,8 @@
-import React, {Component} from 'react'
+import React, { Component } from 'react'
 import Todo from './Todo'
 import UpdateTodo from './UpdateTodo'
 import axios from 'axios'
-import {Link} from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 export default class SingleTodo extends Component {
   constructor () {
@@ -10,6 +10,7 @@ export default class SingleTodo extends Component {
     this.state = {
       todo: {}
     }
+    this.updateTodo = this.updateTodo.bind(this);
   }
 
   async componentDidMount () {
@@ -18,14 +19,17 @@ export default class SingleTodo extends Component {
     this.setState({todo: res.data})
   }
 
+  updateTodo(todo) {
+    this.setState({ todo })
+  }
+
   render () {
     const { todo } = this.state;
-    console.log('single todo ->', todo)
 
     return (
       <div id='single-todo'>
         <Todo todo={todo} />
-        <UpdateTodo />
+        <UpdateTodo todo={todo} updateTodo={this.updateTodo} />
         <Link to='/'>Back</Link>
       </div>
     )
