@@ -31,6 +31,7 @@ export default (props) => {
         type='submit'
         disabled={!taskName || !assignee ? true : false}
       >Submit</button>
+      {/* <div className='error'>ERROR</div> */}
     </form>
   )
 }

@@ -1,8 +1,9 @@
 import React from 'react'
-import {Link} from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 const Todo = ({ todo, removeTodo }) => {
   const { id, taskName, assignee } = todo;
+  console.log('Props ->', removeTodo);
 
   return (
     <div className='todo row' key={id}>
@@ -12,12 +13,16 @@ const Todo = ({ todo, removeTodo }) => {
         </Link>
         <p>Assigned to: {assignee}</p>
       </div>
-      <div className='column'>
-        <button
-          className='remove'
-          onClick={() => removeTodo(id)}
-        >Remove</button>
-      </div>
+      { !removeTodo ? null :
+          (
+            <div className='column'>
+              <button
+                className='remove'
+                onClick={() => removeTodo(id)}
+              >Remove</button>
+            </div>
+          )
+      }
     </div>
   )
 }
