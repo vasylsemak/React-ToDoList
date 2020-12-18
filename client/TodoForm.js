@@ -5,7 +5,10 @@ export default (props) => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <label htmlFor='taskName'>Task Name:</label>
+      <label htmlFor='taskName'>
+        Task Name:
+        <span className='warning'>Required!</span>
+      </label>
       <input
         type='text'
         name='taskName'
@@ -13,7 +16,10 @@ export default (props) => {
         placeholder={namePH}
         onChange={handleChange}
       />
-      <label htmlFor='assignee'>Assign To:</label>
+      <label htmlFor='assignee'>
+        Assign To:
+        <span className='warning'>Required!</span>
+      </label>
       <input
         type='text'
         name='assignee'
@@ -23,7 +29,7 @@ export default (props) => {
       />
       <button
         type='submit'
-        disabled={taskName.length<1 || assignee.length<1 ? true : false}
+        disabled={!taskName || !assignee ? true : false}
       >Submit</button>
     </form>
   )
