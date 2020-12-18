@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom'
 
 const Todo = ({ todo, removeTodo }) => {
   const { id, taskName, assignee } = todo;
-  console.log('Props ->', removeTodo);
 
   return (
     <div className='todo row' key={id}>
