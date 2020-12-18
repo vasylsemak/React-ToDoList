@@ -6,7 +6,6 @@ export default class CreateTodo extends Component {
   constructor() {
     super();
     this.state = {
-      id: 0,
       taskName: '',
       assignee: ''
     }
@@ -36,7 +35,6 @@ export default class CreateTodo extends Component {
 
   clearInput() {
     this.setState({
-      id: 0,
       taskName: '',
       assignee: ''
     });
@@ -49,7 +47,6 @@ export default class CreateTodo extends Component {
         assignee={this.state.assignee}
         handleChange={this.handleChange}
         handleSubmit={this.handleSubmit}
-        stateT={this.state}
       />
     )
   }

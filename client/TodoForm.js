@@ -21,7 +21,10 @@ export default (props) => {
         placeholder={assigneePH}
         onChange={handleChange}
       />
-      <button type='submit'>Submit</button>
+      <button
+        type='submit'
+        disabled={taskName.length<1 || assignee.length<1 ? true : false}
+      >Submit</button>
     </form>
   )
 }
