@@ -1,53 +1,36 @@
-import React, { Component } from 'react';
-import axios from 'axios';
-import TodoForm from './TodoForm';
+import React, { useState } from 'react'
+import axios from 'axios'
+import TodoForm from './TodoForm'
 
-export default class CreateTodo extends Component {
-  constructor() {
-    super();
-    this.state = {
-      taskName: '',
-      assignee: ''
-    }
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.clearInput = this.clearInput.bind(this);
+export default ({ addTodo }) => {
+  const [ taskName, setName ] = useState('')
+  const [ assignee, setAssignee ] = useState('')
+
+  function handleChange(evt) {
+    evt.preventDefault()
+    const name = evt.target.name
+    const value = evt.target.value
+    name === 'taskName' ? setName(value) : setAssignee(value)
   }
 
-  handleChange(event) {
-    event.preventDefault();
-    const name = event.target.name;
-    const value = event.target.value;
-    this.setState({ [name]: value });
+  async function handleSubmit(evt) {
+    evt.preventDefault()
+    clearInput()
+    const { data } = await axios.post('/api/todos', { taskName, assignee })
+    addTodo(data)
   }
 
-  async handleSubmit(event) {
-    event.preventDefault();
-    const taskName = event.target.taskName.value;
-    const assignee = event.target.assignee.value;
-    this.setState({ taskName, assignee });
-    this.clearInput();
-
-    const { data } = await axios.post('/api/todos', { taskName, assignee });
-    const { addTodo } = this.props;
-    addTodo(data);
+  function clearInput() {
+    setName('')
+    setAssignee('')
   }
 
-  clearInput() {
-    this.setState({
-      taskName: '',
-      assignee: ''
-    });
-  }
-
-  render () {
-    return (
-      <TodoForm
-        taskName={this.state.taskName}
-        assignee={this.state.assignee}
-        handleChange={this.handleChange}
-        handleSubmit={this.handleSubmit}
-      />
-    )
-  }
+  return (
+    <TodoForm
+      taskName={taskName}
+      assignee={assignee}
+      handleChange={handleChange}
+      handleSubmit={handleSubmit}
+    />
+  )
 }

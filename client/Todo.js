@@ -7,20 +7,18 @@ const Todo = ({ todo, removeTodo }) => {
   return (
     <div className='todo row' key={id}>
       <div className='column'>
-        <Link to={`/todos/${id}`}>
-          <h3>{taskName}</h3>
-        </Link>
+        <Link to={`/todos/${id}`}><h3>{taskName}</h3></Link>
         <p>Assigned to: {assignee}</p>
       </div>
       { !removeTodo ? null :
-          (
-            <div className='column'>
-              <button
-                className='remove'
-                onClick={() => removeTodo(id)}
-              >Remove</button>
-            </div>
-          )
+        (
+          <div className='column'>
+            <button
+              className='remove'
+              onClick={() => removeTodo(id)}
+            >Remove</button>
+          </div>
+        )
       }
     </div>
   )
