@@ -1,48 +1,39 @@
-import React, {Component} from 'react'
+import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import Todo from './Todo'
 import CreateTodo from './CreateTodo'
 
-export default class Todos extends Component {
-  constructor () {
-    super()
-    this.state = {
-      todos: []
-    }
-    this.addTodo = this.addTodo.bind(this);
-    this.removeTodo = this.removeTodo.bind(this);
+const Todos = () => {
+  const [ todos, setTodos ] = useState([])
+
+  useEffect(() => {
+    (async function() {
+      const { data } = await axios.get('/api/todos')
+      setTodos(data)
+    })()
+  }, [])
+
+  function addTodo(todo) {
+    const todosUpdated = [ ...todos, todo ]
+    setTodos(todosUpdated)
   }
 
-  async componentDidMount() {
-    const { data } = await axios.get('/api/todos');
-    this.setState({ todos: data });
+  async function removeTodo(todoId) {
+    await axios.delete(`/api/todos/${todoId}`)
+    const todosUpdated = todos.filter(t => t.id !== todoId)
+    setTodos(todosUpdated)
   }
 
-  addTodo(todo) {
-    const todos = this.state.todos;
-    const todosUpdated = [...todos, todo];
-    this.setState({ todos: todosUpdated });
-  }
-
-  async removeTodo(todoId) {
-    await axios.delete(`/api/todos/${todoId}`);
-    const todos = this.state.todos;
-    const todosUpdated = todos.filter( t => t.id !== todoId);
-    this.setState({ todos: todosUpdated });
-  }
-
-  render () {
-    const { todos } = this.state;
-
-    return (
-      <div id='todos'>
-        <CreateTodo addTodo={this.addTodo} />
-        {
-          this.state.todos.map(todo =>
-            <Todo key={todo.id} todo={todo} removeTodo={this.removeTodo} />
-          )
-        }
-      </div>
-    )
-  }
+  return (
+    <div id='todos'>
+      <CreateTodo addTodo={addTodo} />
+      {
+        todos.map(todo =>
+          <Todo key={todo.id} todo={todo} removeTodo={removeTodo} />
+        )
+      }
+    </div>
+  )
 }
+
+export default Todos
